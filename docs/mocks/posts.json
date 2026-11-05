@@ -1,0 +1,27 @@
+{
+  "_note": "POST /api/posts のモック。published は 201、rejected は 200 で返る。",
+  "request": {
+    "text": "吉田山の竹中稲荷、11月の朝に行ったらほぼ誰もいなかった。鳥居の朱色と紅葉が重なってきれい。",
+    "photo_path": "posts/AbC123/1730790000.jpg"
+  },
+  "response_published": {
+    "status": "published",
+    "post": {
+      "id": "p_mock_002",
+      "spot_id": "takenaka_inari",
+      "photo_url": "/media/mock_post_002.jpg",
+      "summary_ja": "11月の朝はほぼ誰もいなかった。鳥居の朱色と紅葉が重なってきれい。",
+      "summary_en": "Almost empty on a November morning. The vermilion gates and autumn leaves look beautiful together.",
+      "mood_tags": ["朱色", "紅葉", "静か"],
+      "visited_month": 11,
+      "visited_time_of_day": "朝",
+      "crowd_level": 1,
+      "label": "投稿者の体験",
+      "created_at": "2026-11-06T08:30:00+09:00"
+    }
+  },
+  "response_rejected": {
+    "status": "rejected",
+    "reason": "宣伝・勧誘の内容が含まれています"
+  }
+}

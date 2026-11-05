@@ -1,0 +1,27 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // スポットの写真・動画（運営側で用意したもの）。読み取りだけ公開
+    match /spots/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 地元民の投稿写真。匿名ログインした本人が自分のフォルダにだけ上げられる
+    // 画像のみ、10MB まで。読み取りは公開（フィードに表示するため）
+    match /posts/{uid}/{fileName} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.auth.uid == uid
+                    && request.resource.size < 10 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+      allow update, delete: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

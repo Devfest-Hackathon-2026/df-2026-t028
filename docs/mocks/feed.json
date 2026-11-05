@@ -1,0 +1,115 @@
+{
+  "_note": "GET /api/feed?lambda=0.8 のモック。スポット名・説明は data/spots_japan.json の実データ。混雑・見頃などの値はダミーなので、画面作りにだけ使い、本番の表示には使わない。",
+  "items": [
+    {
+      "type": "spot",
+      "spot": {
+        "id": "fushimi_inari",
+        "name": "伏見稲荷大社",
+        "kind": "famous",
+        "pref": "京都府",
+        "city": "京都市伏見区",
+        "media": [
+          {
+            "type": "image",
+            "url": "/media/fushimi_inari.jpg",
+            "poster": null,
+            "width": 1080,
+            "height": 1440,
+            "credit": { "author": "（モック）", "license": "CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/" }
+          }
+        ],
+        "mood_tags": ["朱色", "鳥居", "山道", "狐"],
+        "now": { "in_season": true, "season_label": "紅葉", "crowd_level": 5, "crowd_source": "official_trend" }
+      }
+    },
+    {
+      "type": "alternative",
+      "for_spot_id": "fushimi_inari",
+      "reason": { "shared_tags": ["朱色", "鳥居", "山道"], "similarity": 0.83 },
+      "spot": {
+        "id": "takenaka_inari",
+        "name": "竹中稲荷社",
+        "kind": "hidden",
+        "pref": "京都府",
+        "city": "京都市左京区",
+        "media": [
+          {
+            "type": "image",
+            "url": "/media/takenaka_inari.jpg",
+            "poster": null,
+            "width": 1080,
+            "height": 1440,
+            "credit": { "author": "（モック）", "license": "CC BY 4.0", "source_url": "https://commons.wikimedia.org/" }
+          }
+        ],
+        "mood_tags": ["朱色", "鳥居", "静か", "森"],
+        "now": { "in_season": true, "season_label": "紅葉", "crowd_level": 1, "crowd_source": "user_reports" }
+      }
+    },
+    {
+      "type": "spot",
+      "spot": {
+        "id": "itsukushima",
+        "name": "厳島神社",
+        "kind": "famous",
+        "pref": "広島県",
+        "city": "廿日市市",
+        "media": [
+          {
+            "type": "video",
+            "url": "/media/itsukushima.mp4",
+            "poster": "/media/itsukushima_poster.jpg",
+            "width": 720,
+            "height": 1280,
+            "credit": { "author": "チーム撮影", "license": "自作", "source_url": null }
+          }
+        ],
+        "mood_tags": ["海", "朱色", "鳥居", "潮の満ち引き"],
+        "now": { "in_season": false, "season_label": null, "crowd_level": 4, "crowd_source": "official_trend" }
+      }
+    },
+    {
+      "type": "alternative",
+      "for_spot_id": "itsukushima",
+      "reason": { "shared_tags": ["海", "朱色", "鳥居"], "similarity": 0.79 },
+      "spot": {
+        "id": "ouo_torii",
+        "name": "大魚神社の海中鳥居",
+        "kind": "hidden",
+        "pref": "佐賀県",
+        "city": "太良町",
+        "media": [
+          {
+            "type": "image",
+            "url": "/media/ouo_torii.jpg",
+            "poster": null,
+            "width": 1080,
+            "height": 1440,
+            "credit": { "author": "（モック）", "license": "CC0", "source_url": "https://commons.wikimedia.org/" }
+          }
+        ],
+        "mood_tags": ["海", "朱色", "鳥居", "干潟"],
+        "now": { "in_season": false, "season_label": null, "crowd_level": null, "crowd_source": null }
+      }
+    },
+    {
+      "type": "post",
+      "post": {
+        "id": "p_mock_001",
+        "spot_id": "tanukidani",
+        "photo_url": "/media/mock_post_001.jpg",
+        "summary_ja": "石段はきついが、上からの眺めは最高。土曜の昼でも数人しかいなかった。",
+        "summary_en": "The stone steps are tough, but the view from the top is amazing. Only a few people were there even on a Saturday afternoon.",
+        "mood_tags": ["石段", "眺望", "静か"],
+        "visited_month": null,
+        "visited_time_of_day": "昼",
+        "crowd_level": 2,
+        "label": "投稿者の体験",
+        "created_at": "2026-11-06T09:12:00+09:00"
+      }
+    }
+  ],
+  "next_cursor": "mock_cursor_5",
+  "context": { "lambda": 0.8, "month": 11, "time_of_day": "昼" }
+}

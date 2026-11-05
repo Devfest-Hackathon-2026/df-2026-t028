@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// 方針：書き込みは Cloud Run の API（サービスアカウント api-runner）だけが行う。
+// API は Admin SDK を使うので、このルールの影響を受けない。
+// クライアント（ブラウザ）は公開データの読み取りと、自分の「いいね」だけを扱える。
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // スポット（名所・穴場）。埋め込みや知名度も含む。読み取りだけ公開
+    match /spots/{spotId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 地元民の投稿。Gemini のチェックを通って公開されたものだけ読める
+    match /posts/{postId} {
+      allow read: if resource.data.status == 'published';
+      allow write: if false;
+    }
+
+    // ユーザーごとのデータ（いいね履歴など）。匿名ログインした本人だけ
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // それ以外はすべて拒否
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
