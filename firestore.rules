@@ -1,31 +1,30 @@
 rules_version = '2';
 
-// 方針：書き込みは Cloud Run の API（サービスアカウント api-runner）だけが行う。
-// API は Admin SDK を使うので、このルールの影響を受けない。
-// クライアント（ブラウザ）は公開データの読み取りと、自分の「いいね」だけを扱える。
+// 方針：
+// - スポット・投稿の読み書きはすべて Cloud Run の API（Admin SDK、ルールの対象外）が行う。
+//   spots には埋め込み・知名度など内部用の値があり、Firestore のルールではフィールド単位で隠せないため、
+//   クライアントからの直接読み取りも禁止する。
+// - クライアントが直接扱えるのは、自分の「いいね」だけ。押した瞬間に反映するため。
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // スポット（名所・穴場）。埋め込みや知名度も含む。読み取りだけ公開
-    match /spots/{spotId} {
-      allow read: if true;
-      allow write: if false;
+    // いいね：users/{uid}/likes/{spotId} = { created_at: <サーバー時刻> }
+    match /users/{uid}/likes/{spotId} {
+      allow read, delete: if isOwner(uid);
+      allow create: if isOwner(uid)
+                    && spotId.matches('^[a-z0-9_]{1,64}$')
+                    && request.resource.data.keys().hasOnly(['created_at'])
+                    && request.resource.data.created_at == request.time;
+      allow update: if false;
     }
 
-    // 地元民の投稿。Gemini のチェックを通って公開されたものだけ読める
-    match /posts/{postId} {
-      allow read: if resource.data.status == 'published';
-      allow write: if false;
-    }
-
-    // ユーザーごとのデータ（いいね履歴など）。匿名ログインした本人だけ
-    match /users/{uid}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
-    }
-
-    // それ以外はすべて拒否
+    // それ以外（spots・posts・users の他のパスなど）はすべて拒否
     match /{document=**} {
       allow read, write: if false;
+    }
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
     }
   }
 }

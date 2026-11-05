@@ -1,8 +1,8 @@
 {
-  "_note": "POST /api/posts のモック。published は 201、rejected は 200 で返る。",
+  "_note": "POST /api/posts のモック。published は 201、rejected は 200 で返る。ヘッダに Idempotency-Key（UUID）が必須。",
   "request": {
     "text": "吉田山の竹中稲荷、11月の朝に行ったらほぼ誰もいなかった。鳥居の朱色と紅葉が重なってきれい。",
-    "photo_path": "posts/AbC123/1730790000.jpg"
+    "photo_path": "uploads/AbC123/6f1c2a9e.jpg"
   },
   "response_published": {
     "status": "published",

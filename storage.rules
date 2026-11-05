@@ -1,23 +1,27 @@
 rules_version = '2';
 
+// 方針：
+// - 投稿写真は、審査前は非公開の uploads/ に置く。Gemini のチェックを通ったら、API が public/posts/ にコピーする。
+//   却下・未送信の写真は uploads/ に残り、バケットのライフサイクル設定で 1 日後に自動削除される。
+// - public/ への書き込みは API（サービスアカウント、ルールの対象外）だけが行う。
 service firebase.storage {
   match /b/{bucket}/o {
 
-    // スポットの写真・動画（運営側で用意したもの）。読み取りだけ公開
-    match /spots/{allPaths=**} {
-      allow read: if true;
-      allow write: if false;
-    }
-
-    // 地元民の投稿写真。匿名ログインした本人が自分のフォルダにだけ上げられる
-    // 画像のみ、10MB まで。読み取りは公開（フィードに表示するため）
-    match /posts/{uid}/{fileName} {
-      allow read: if true;
+    // 審査前の投稿写真。本人が新規アップロードだけでき、本人以外は読めない
+    // 画像のみ、10MB まで。上書き・削除は不可（API が判定に使う元画像を差し替えられないように）
+    match /uploads/{uid}/{fileName} {
+      allow read: if request.auth != null && request.auth.uid == uid;
       allow create: if request.auth != null
                     && request.auth.uid == uid
                     && request.resource.size < 10 * 1024 * 1024
-                    && request.resource.contentType.matches('image/.*');
+                    && request.resource.contentType.matches('image/(jpeg|png|webp)');
       allow update, delete: if false;
+    }
+
+    // 公開してよいもの（承認済みの投稿写真、スポットの写真・動画）。読み取りだけ公開
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
     }
 
     match /{allPaths=**} {
