@@ -7,6 +7,7 @@
         "id": "fushimi_inari",
         "name": "伏見稲荷大社",
         "kind": "famous",
+        "fame_band": "有名",
         "pref": "京都府",
         "city": "京都市伏見区",
         "media": [
@@ -31,6 +32,7 @@
         "id": "takenaka_inari",
         "name": "竹中稲荷社",
         "kind": "hidden",
+        "fame_band": "穴場候補",
         "pref": "京都府",
         "city": "京都市左京区",
         "media": [
@@ -53,6 +55,7 @@
         "id": "itsukushima",
         "name": "厳島神社",
         "kind": "famous",
+        "fame_band": "有名",
         "pref": "広島県",
         "city": "廿日市市",
         "media": [
@@ -77,6 +80,7 @@
         "id": "ouo_torii",
         "name": "大魚神社の海中鳥居",
         "kind": "hidden",
+        "fame_band": "穴場候補",
         "pref": "佐賀県",
         "city": "太良町",
         "media": [
