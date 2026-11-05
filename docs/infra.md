@@ -76,7 +76,10 @@ Firestore でクライアントが直接扱えるのは、自分のいいねだ�
 
 - Firebase の Web 用設定（`apiKey` など）は秘密情報ではない。ブラウザに配る前提の値で、アクセス制御はルールで行う
 - デプロイ URL は **11/14（Regional Day）まで必ず**動かし続ける。決勝に進んだら **11/27（Demo Day）・11/29（DevFest Tokyo 展示）まで**延長する。その間、インフラ担当が毎日、クレジット残額と URL の動作を確認する
-- スクリプトの実行は `bash infra/setup.sh` / `bash infra/deploy.sh ...`（実行権限も付けてあるので `./infra/...` でも可）
+- スクリプトは**リポジトリの直下で**実行する
+  - Mac / Linux：`bash infra/deploy.sh api`（実行権限も付けてあるので `./infra/deploy.sh api` でも可）
+  - Windows（PowerShell）：`& "C:\Program Files\Git\bin\bash.exe" infra/deploy.sh api`
+    - PowerShell で `bash` とだけ打つと WSL の bash が起動し、Windows 側の gcloud / firebase のログインが使えないので失敗する
 
 ## 未決事項
 

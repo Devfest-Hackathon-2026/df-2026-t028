@@ -6,6 +6,9 @@
 #   bash infra/deploy.sh rules   … Firestore / Storage のルールとインデックス
 #   bash infra/deploy.sh all     … 上の 3 つすべて
 #
+# リポジトリの直下で実行する。Windows の PowerShell では WSL の bash ではなく Git Bash を使う：
+#   & "C:\Program Files\Git\bin\bash.exe" infra/deploy.sh api
+#
 # デモ当日（11/14・11/27）はコールドスタートを避けるため、常時 1 台起動しておく：
 #   MIN_INSTANCES=1 bash infra/deploy.sh api    （終わったら MIN_INSTANCES なしで再デプロイして 0 に戻す）
 #
